@@ -270,7 +270,7 @@ app.get("/api/userscore", async (req, res) => {
       {
         $sort: {
           currentQuestion: -1, // Sort by question number in descending order
-          updatedAt: -1 // Sort by updatedAt in descending order if question numbers are the same
+          updatedAt: 1 // Sort by updatedAt in ascending order if question numbers are the same
         }
       }
     ]);
