@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Role is required"],
         enum: ['user', 'admin']
     }
-});
+},
+{
+    timestamps: true
+}
+);
 
 module.exports = mongoose.model('User', UserSchema);

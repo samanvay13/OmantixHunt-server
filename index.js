@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userModel = require("./models/user.model");
+const ruleModel = require("./models/rule.model");
+const notificationModel = require("./models/notification.model");
+const questionModel = require("./models/question.model");
+const userScoreModel = require("./models/userScore.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -73,67 +77,209 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// //get all Products
-// app.get("/api/products", async (req, res) => {
-//   try {
-//     const products = await Product.find({});
-//     res.status(200).json(products);
-//   } catch (err) {
-//     res.status(505).json({ message: err.message });
-//   }
-// });
+// get all rules
+app.get("/api/rule", async (req, res) => {
+  try {
+    const rule = await ruleModel.find({});
+    res.status(200).json(rule);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
 
-// // get product by id
-// app.get("/api/products/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const product = await Product.findById(id);
-//     res.status(200).json(product);
-//   } catch (err) {
-//     res.status(505).json({ message: err.message });
-//   }
-// });
+// get rules by id
+app.get("/api/rule/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const rule = await ruleModel.findById(id);
+    res.status(200).json(rule);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
 
-// // update a product
+//update rules by id
+app.put("/api/rule/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const rule = await ruleModel.findyIdAndUpdate(id, req.body);
+    if (!rule) {
+      return res.status(404).json({ message: "rule not found" });
+    }
+    const updatedRule = await ruleModel.findById(id);
+    res.status(200).json(updatedRule);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
 
-// app.put("/api/products/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const product = await Product.findByIdAndUpdate(id, req.body);
-//     if (!product) {
-//       return res.status(404).json({ message: "Product not found" });
-//     }
-//     const updateProduct = await Product.findById(id);
-//     res.status(200).json(updateProduct);
-//   } catch (err) {
-//     res.status(505).json({ message: err.message });
-//   }
-// });
+//add rule by id
+app.post("/api/rules", async (req, res) => {
+  try {
+    const rule = await ruleModel.create(req.body);
+    res.status(201).json(rule);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
 
-// //create a product
-// app.post("/api/products", async (req, res) => {
-//   try {
-//     const product = await Product.create(req.body);
-//     res.status(201).json(product);
-//   } catch (err) {
-//     res.status(505).json({ message: err.message });
-//   }
-// });
+//delete rules by id
+app.delete("/api/rules/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const rule = await ruleModel.findByIdAndDelete(id);
+    if (!rule) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json(rule);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
 
-// //delete a product
+// notifications api 
 
-// app.delete("/api/products/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const product = await Product.findByIdAndDelete(id);
-//     if (!product) {
-//       return res.status(404).json({ message: "Product not found" });
-//     }
-//     res.status(200).json(product);
-//   } catch (err) {
-//     res.status(505).json({ message: err.message });
-//   }
-// });
+// get all notifications
+app.get("/api/notification", async (req, res) => {
+  try {
+    const notification = await notificationModel.find({});
+    res.status(200).json(notification);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+// get notification by id
+app.get("/api/notification/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notification = await notificationModel.findById(id);
+    res.status(200).json(notification);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//update notification by id
+app.put("/api/notification/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notification = await notificationModel.findyIdAndUpdate(id, req.body);
+    if (!notification) {
+      return res.status(404).json({ message: "notification not found" });
+    }
+    const updatednotification = await notificationModel.findById(id);
+    res.status(200).json(updatednotification);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//add notification by id
+app.post("/api/notifications", async (req, res) => {
+  try {
+    const notification = await notificationModel.create(req.body);
+    res.status(201).json(notification);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//delete notification by id
+app.delete("/api/notifications/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notification = await notificationModel.findByIdAndDelete(id);
+    if (!notification) {
+      return res.status(404).json({ message: "Notification not found" });
+    }
+    res.status(200).json(notification);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+// question API
+
+// get all questions
+app.get("/api/question", async (req, res) => {
+  try {
+    const question = await questionModel.find({});
+    res.status(200).json(question);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+// get question by id
+app.get("/api/question/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await questionModel.findById(id);
+    res.status(200).json(question);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//update question by id
+app.put("/api/question/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await questionModel.findyIdAndUpdate(id, req.body);
+    if (!question) {
+      return res.status(404).json({ message: "question not found" });
+    }
+    const updatedquestion = await questionModel.findById(id);
+    res.status(200).json(updatedquestion);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//add question by id
+app.post("/api/questions", async (req, res) => {
+  try {
+    const question = await questionModel.create(req.body);
+    res.status(201).json(question);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+//delete question by id
+app.delete("/api/questions/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await questionModel.findByIdAndDelete(id);
+    if (!question) {
+      return res.status(404).json({ message: "question not found" });
+    }
+    res.status(200).json(question);
+  } catch (err) {
+    res.status(505).json({ message: err.message });
+  }
+});
+
+// leader board API
+
+// get all Leaderboard Username
+app.get("/api/userscore", async (req, res) => {
+  try {
+    const aggregatedScores = await userScoreModel.aggregate([
+      {
+        $sort: {
+          currentQuestion: -1, // Sort by question number in descending order
+          updatedAt: -1 // Sort by updatedAt in descending order if question numbers are the same
+        }
+      }
+    ]);
+
+    res.status(200).json(aggregatedScores);
+  } catch (err) {
+    res.status(500).json({ message: err.message }); // Corrected status code from 505 to 500 for server error
+  }
+});
 
 mongoose
   .connect(
