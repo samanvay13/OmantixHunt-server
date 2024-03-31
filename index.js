@@ -102,7 +102,7 @@ app.get("/api/rule/:id", async (req, res) => {
 app.put("/api/rules/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const rule = await ruleModel.findyIdAndUpdate(id, req.body);
+    const rule = await ruleModel.findByIdAndUpdate(id, req.body);
     if (!rule) {
       return res.status(404).json({ message: "rule not found" });
     }
@@ -164,7 +164,7 @@ app.get("/api/notification/:id", async (req, res) => {
 app.put("/api/notifications/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const notification = await notificationModel.findyIdAndUpdate(id, req.body);
+    const notification = await notificationModel.findByIdAndUpdate(id, req.body);
     if (!notification) {
       return res.status(404).json({ message: "Notification not found" });
     }
@@ -226,7 +226,7 @@ app.get("/api/question/:id", async (req, res) => {
 app.put("/api/questions/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const question = await questionModel.findyIdAndUpdate(id, req.body);
+    const question = await questionModel.findByIdAndUpdate(id, req.body);
     if (!question) {
       return res.status(404).json({ message: "question not found" });
     }
