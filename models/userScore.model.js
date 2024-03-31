@@ -8,7 +8,7 @@ const UserScoreSchema = new Schema({
         required: [true, "User reference is required"],
     },
     currentQuestion: {
-        type: String,
+        type: Number,
         required: [true, "Current question is required"],
         default:1,
     },

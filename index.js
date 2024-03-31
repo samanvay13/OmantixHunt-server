@@ -16,9 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //test get api
-app.get("/", (req, res) => {
-  res.send("hello from node api server");
-});
+// app.get("/", (req, res) => {
+//   res.send("hello from node api server");
+// });
 
 //existing user check
 //user creation
@@ -78,7 +78,7 @@ app.post("/login", async (req, res) => {
 });
 
 // get all rules
-app.get("/api/rule", async (req, res) => {
+app.get("/api/rules", async (req, res) => {
   try {
     const rule = await ruleModel.find({});
     res.status(200).json(rule);
@@ -113,8 +113,8 @@ app.put("/api/rule/:id", async (req, res) => {
   }
 });
 
-//add rule by id
-app.post("/api/rules", async (req, res) => {
+//add rule
+app.post("/api/rule/create", async (req, res) => {
   try {
     const rule = await ruleModel.create(req.body);
     res.status(201).json(rule);

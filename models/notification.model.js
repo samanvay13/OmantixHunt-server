@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const NotificationSchema = new mongoose.Schema({
     statement:{
         type: String,
-        required: [true, "Rule is required"],
+        required: [true, "Notification is required"],
     },
 },
 {
