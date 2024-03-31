@@ -99,7 +99,7 @@ app.get("/api/rule/:id", async (req, res) => {
 });
 
 //update rules by id
-app.put("/api/rule/:id", async (req, res) => {
+app.put("/api/rules/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const rule = await ruleModel.findyIdAndUpdate(id, req.body);
@@ -114,7 +114,7 @@ app.put("/api/rule/:id", async (req, res) => {
 });
 
 //add rule
-app.post("/api/rule/create", async (req, res) => {
+app.post("/api/rules/create", async (req, res) => {
   try {
     const rule = await ruleModel.create(req.body);
     res.status(201).json(rule);
@@ -124,7 +124,7 @@ app.post("/api/rule/create", async (req, res) => {
 });
 
 //delete rules by id
-app.delete("/api/rules/:id", async (req, res) => {
+app.delete("/api/rules/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const rule = await ruleModel.findByIdAndDelete(id);
@@ -140,7 +140,7 @@ app.delete("/api/rules/:id", async (req, res) => {
 // notifications api 
 
 // get all notifications
-app.get("/api/notification", async (req, res) => {
+app.get("/api/notifications", async (req, res) => {
   try {
     const notification = await notificationModel.find({});
     res.status(200).json(notification);
@@ -161,12 +161,12 @@ app.get("/api/notification/:id", async (req, res) => {
 });
 
 //update notification by id
-app.put("/api/notification/:id", async (req, res) => {
+app.put("/api/notifications/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const notification = await notificationModel.findyIdAndUpdate(id, req.body);
     if (!notification) {
-      return res.status(404).json({ message: "notification not found" });
+      return res.status(404).json({ message: "Notification not found" });
     }
     const updatednotification = await notificationModel.findById(id);
     res.status(200).json(updatednotification);
@@ -176,7 +176,7 @@ app.put("/api/notification/:id", async (req, res) => {
 });
 
 //add notification by id
-app.post("/api/notifications", async (req, res) => {
+app.post("/api/notifications/create", async (req, res) => {
   try {
     const notification = await notificationModel.create(req.body);
     res.status(201).json(notification);
@@ -186,7 +186,7 @@ app.post("/api/notifications", async (req, res) => {
 });
 
 //delete notification by id
-app.delete("/api/notifications/:id", async (req, res) => {
+app.delete("/api/notifications/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const notification = await notificationModel.findByIdAndDelete(id);
@@ -202,7 +202,7 @@ app.delete("/api/notifications/:id", async (req, res) => {
 // question API
 
 // get all questions
-app.get("/api/question", async (req, res) => {
+app.get("/api/questions", async (req, res) => {
   try {
     const question = await questionModel.find({});
     res.status(200).json(question);
@@ -223,7 +223,7 @@ app.get("/api/question/:id", async (req, res) => {
 });
 
 //update question by id
-app.put("/api/question/:id", async (req, res) => {
+app.put("/api/questions/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const question = await questionModel.findyIdAndUpdate(id, req.body);
@@ -238,7 +238,7 @@ app.put("/api/question/:id", async (req, res) => {
 });
 
 //add question by id
-app.post("/api/questions", async (req, res) => {
+app.post("/api/questions/create", async (req, res) => {
   try {
     const question = await questionModel.create(req.body);
     res.status(201).json(question);
@@ -248,7 +248,7 @@ app.post("/api/questions", async (req, res) => {
 });
 
 //delete question by id
-app.delete("/api/questions/:id", async (req, res) => {
+app.delete("/api/questions/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const question = await questionModel.findByIdAndDelete(id);
@@ -277,7 +277,7 @@ app.get("/api/userscore", async (req, res) => {
 
     res.status(200).json(aggregatedScores);
   } catch (err) {
-    res.status(500).json({ message: err.message }); // Corrected status code from 505 to 500 for server error
+    res.status(500).json({ message: err.message });
   }
 });
 
