@@ -104,7 +104,7 @@ app.put("/api/rules/update/:id", async (req, res) => {
     const { id } = req.params;
     const rule = await ruleModel.findByIdAndUpdate(id, req.body);
     if (!rule) {
-      return res.status(404).json({ message: "rule not found" });
+      return res.status(404).json({ message: "Rule not found" });
     }
     const updatedRule = await ruleModel.findById(id);
     res.status(200).json(updatedRule);
@@ -129,7 +129,7 @@ app.delete("/api/rules/delete/:id", async (req, res) => {
     const { id } = req.params;
     const rule = await ruleModel.findByIdAndDelete(id);
     if (!rule) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "Rule not found" });
     }
     res.status(200).json(rule);
   } catch (err) {
@@ -228,7 +228,7 @@ app.put("/api/questions/update/:id", async (req, res) => {
     const { id } = req.params;
     const question = await questionModel.findByIdAndUpdate(id, req.body);
     if (!question) {
-      return res.status(404).json({ message: "question not found" });
+      return res.status(404).json({ message: "Question not found" });
     }
     const updatedquestion = await questionModel.findById(id);
     res.status(200).json(updatedquestion);
@@ -253,7 +253,7 @@ app.delete("/api/questions/delete/:id", async (req, res) => {
     const { id } = req.params;
     const question = await questionModel.findByIdAndDelete(id);
     if (!question) {
-      return res.status(404).json({ message: "question not found" });
+      return res.status(404).json({ message: "Question not found" });
     }
     res.status(200).json(question);
   } catch (err) {
