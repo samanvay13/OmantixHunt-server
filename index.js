@@ -34,17 +34,17 @@ app.use(express.urlencoded({ extended: false }));
 //token Generated
 
 app.post("/register", async (req, res) => {
-
   const { fName, lName, email, whatsapp, username, password, role } = req.body;
   try {
     const existingUser = await userModel.findOne({ username: username });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exist" });
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await userModel.create({
+    // Create the user in the users collection
+    const newUser = await userModel.create({
       fName: fName,
       lName: lName,
       email: email,
@@ -54,10 +54,19 @@ app.post("/register", async (req, res) => {
       role: role,
     });
 
-    const token = jwt.sign({ username: result.username, id: result._id }, SECRET_KEY);
-    res.status(201).json({ user: result, token: token });
+    // Create the corresponding userScore entry with default current question
+    const userScore = await userScoreModel.create({
+      username: newUser._id, // Using the user's ID as a reference
+      currentQuestion: 1, // Default current question
+    });
+
+    // Generate JWT token
+    const token = jwt.sign({ username: newUser.username, id: newUser._id }, SECRET_KEY);
+    
+    // Respond with user details and token
+    res.status(201).json({ user: newUser, token: token });
   } catch (err) {
-    res.status(505).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
