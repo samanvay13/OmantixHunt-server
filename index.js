@@ -13,7 +13,7 @@ const app = express();
 
 const cors = require('cors');
 const corsOptions ={
-    origin:['*'], 
+    origin:['https://omantixhunt.in', 'http://localhost:4000'], 
     credentials:true,
     optionSuccessStatus:200
 }
